@@ -2,30 +2,29 @@ package io.produtosapi.controller;
 
 import io.produtosapi.model.Produto;
 import io.produtosapi.repository.ProdutoRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/produtos")
+@RequiredArgsConstructor
 public class ProdutoController {
 
-    private ProdutoRepository produtoRepository;
-
-    public ProdutoController(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;
-    }
+    private final ProdutoRepository produtoRepository;
 
     @PostMapping
     public Produto salvar(@RequestBody Produto produto) {
         System.out.println("Salvando produto... " + produto);
 
-        UUID uuid = UUID.randomUUID();
-        produto.setId(uuid.toString());
         produtoRepository.save(produto);
         return produto;
+    }
+
+    @GetMapping
+    public List<Produto> listar() {
+        return produtoRepository.findAll();
     }
 }

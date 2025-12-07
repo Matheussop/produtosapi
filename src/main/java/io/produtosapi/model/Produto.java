@@ -1,10 +1,9 @@
 package io.produtosapi.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.UUID;
 
 // POJO - Plain Old Java Object
 @Entity
@@ -15,8 +14,9 @@ import lombok.*;
 public class Produto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id") // opcional caso o nome da coluna seja igual do nome do atributo
-    private String id;
+    private UUID id;
     private String nome;
     private String descricao;
     private Double preco;
