@@ -23,6 +23,11 @@ public class ProdutoController {
         return produto;
     }
 
+    @GetMapping("/{id}")
+    public Produto obterPorId(@PathVariable UUID id) {
+        return produtoRepository.findById(id).orElse(null);
+    }
+
     @GetMapping
     public List<Produto> listar() {
         return produtoRepository.findAll();
