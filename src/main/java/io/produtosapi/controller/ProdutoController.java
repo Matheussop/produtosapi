@@ -18,7 +18,6 @@ public class ProdutoController {
     @PostMapping
     public Produto salvar(@RequestBody Produto produto) {
         System.out.println("Salvando produto... " + produto);
-
         produtoRepository.save(produto);
         return produto;
     }
@@ -31,5 +30,22 @@ public class ProdutoController {
     @GetMapping
     public List<Produto> listar() {
         return produtoRepository.findAll();
+    }
+
+    @GetMapping("/buscar")
+    public List<Produto> listarPorNome(@RequestParam("nome") String nome) {
+        return produtoRepository.findByNome(nome);
+    }
+
+
+    @PutMapping("/{id}")
+    public Produto atualizar(@PathVariable("id") UUID id, @RequestBody Produto produto) {
+        produto.setId(id);
+        return produtoRepository.save(produto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable("id") UUID id) {
+        produtoRepository.deleteById(id);
     }
 }
